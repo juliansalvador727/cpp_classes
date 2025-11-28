@@ -1,11 +1,8 @@
-## This is just practice for a test.
-
-## Vector To-Do
-
-- [ ] Implement copy constructor
-- [ ] Implement copy assignment operator
-- [ ] Implement move constructor
-- [ ] Implement move assignment operator
+### Vector
+- [ x ] Implement copy constructor
+- [ x ] Implement copy assignment operator
+- [ x ] Implement move constructor
+- [ x ] Implement move assignment operator
 - [ ] Add `capacity()` getter
 - [ ] Add `empty()`
 - [ ] Add `clear()`
