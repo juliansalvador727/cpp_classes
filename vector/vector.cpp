@@ -20,6 +20,7 @@ class Vector{
         std::size_t length() const;
         std::size_t capacity() const;
         void operator+=( int elem );
+        void operator-=( int elem );
         int& operator[](std::size_t index);
         void reverse();
         void sort();
@@ -78,6 +79,12 @@ void Vector::operator+=( int elem ) {
     ++length_;
 };
 
+void Vector::operator-=( int elem ) {
+    if ( length_ == capacity_ ) resize(capacity_ + 50);
+    array_[length_] = -elem;
+    ++length_;
+}
+
 int& Vector::operator[]( std::size_t index ) {
     if (index >= capacity_) resize(index + 50);
     if (index >= length_) length_ = index + 1;
@@ -94,6 +101,11 @@ void Vector::resize( std::size_t new_capacity ) {
     capacity_ = new_capacity;
     if (length_ > capacity_) length_ = capacity_;
 
+}
+
+bool Vector::is_sorted() {
+    for (std::size_t i { 0 }; i < length_ -1 ; ++i) if (array_[ i ] > array_[ i+1 ]) return false;
+    return true;
 }
 
 void Vector::reverse() {
@@ -121,12 +133,31 @@ void Vector::reverse() {
     }
 }
 
+void Vector::sort() {
+    if (length_ < 2) return;
+    for ( std::size_t i { length_ - 1 }; i > 0; --i ) {
+        std::size_t max_index{0};
+
+        for (std::size_t j { 1 }; j <= i; ++j) {
+            if ( array_[j] > array_[max_index]) {
+                max_index = j;
+            }
+        }
+
+        int temp{array_[max_index]};
+        array_[max_index] = array_[i];
+        array_[i] = temp;
+    } 
+}
+
+
 
 
 int main() {
     Vector a{100};
     for ( std::size_t i { 0 }; i < 51; ++i ) {
-        a += i;
+        if (i % 2) a+=i;
+        else a-=i;
     }
     std::cout << a.length() << std::endl;
     a+= 100;
@@ -138,4 +169,9 @@ int main() {
     for ( std::size_t i { 0 }; i < a.length(); ++i ) {
         std::cout << a[i] << " ";
     }
+    a.sort();
+    std::cout << std::endl;
+    for ( std::size_t i { 0 }; i < a.length(); ++i ) {
+        std::cout << a[i] << " ";
+    }   
 }
