@@ -1,9 +1,10 @@
 ### Vector
+
 - [ x ] Implement copy constructor
 - [ x ] Implement copy assignment operator
 - [ x ] Implement move constructor
 - [ x ] Implement move assignment operator
-- [ ] Add `capacity()` getter
+- [ x ] Add `capacity()` getter
 - [ ] Add `empty()`
 - [ ] Add `clear()`
 - [ ] Add `push_back()` (replace `operator+=`)
