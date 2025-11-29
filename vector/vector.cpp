@@ -18,13 +18,18 @@ class Vector{
         ~Vector();
         
         std::size_t length() const;
+        std::size_t capacity() const;
         void operator+=( int elem );
         int& operator[](std::size_t index);
+        void reverse();
+        void sort();
+        bool is_sorted();
     private:
         std::size_t length_; // number of valid items in the vector
         std::size_t capacity_; // amount of memory allocated
         int* array_;
         void resize(std::size_t new_capacity);
+
 };
 
 // public functions
@@ -62,6 +67,8 @@ Vector::~Vector() { delete[] array_; array_ = nullptr; };
 
 std::size_t Vector::length() const { return length_; };
 
+std::size_t Vector::capacity() const { return capacity_; };
+
 void Vector::operator+=( int elem ) { 
     // resize if not enough capacity.
     if ( length_ == capacity_ ) resize(capacity_ + 50);
@@ -89,18 +96,46 @@ void Vector::resize( std::size_t new_capacity ) {
 
 }
 
+void Vector::reverse() {
+    std::size_t end { length_ - 1 };
+    std::size_t start { 0 };
+    // case odd
+    if ( length_ % 2 ) {
+        while ( start <= end ) {
+            int temp = array_[start];
+            array_[start] = array_[end];
+            array_[end] = temp;
+            start++; end--;
+        }
+    } else
+    {
+        while ( start <= end ) {
+            if ( start == end ) return;
+            else {
+                int temp = array_[start];
+                array_[start] = array_[end];
+                array_[end] = temp;
+                start++; end--;
+            }
+        }
+    }
+}
 
 
-// int main() {
-//     Vector a{100};
-//     for ( std::size_t i { 0 }; i < 50; ++i ) {
-//         int value = (i == 0 ? 4 : (i + 4) + (3 % i));
-//         a += value;
-//     }
-//     std::cout << a.length() << std::endl;
-//     a+= 100;
-//     for ( std::size_t i { 0 }; i < a.length(); ++i ) {
-//         std::cout << a[i] << " ";
-//     }
-//     std::cout << std::endl << a.length();
-// }
+
+int main() {
+    Vector a{100};
+    for ( std::size_t i { 0 }; i < 51; ++i ) {
+        a += i;
+    }
+    std::cout << a.length() << std::endl;
+    a+= 100;
+    for ( std::size_t i { 0 }; i < a.length(); ++i ) {
+        std::cout << a[i] << " ";
+    }
+    std::cout << std::endl << a.length() << " " << a.capacity() << std::endl;
+    a.reverse();
+    for ( std::size_t i { 0 }; i < a.length(); ++i ) {
+        std::cout << a[i] << " ";
+    }
+}
